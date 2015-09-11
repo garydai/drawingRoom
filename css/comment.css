@@ -1,0 +1,36 @@
+
+.comments
+{
+
+	position:relative;
+	top:10px;
+	padding:10px;
+	border:1px solid rgb(169, 169, 169);
+
+
+}
+
+.comment_items
+{
+
+	border-bottom: 1px solid rgb(169, 169, 169);
+	padding:10px;
+}
+.comment_user, .comment_date
+{
+
+
+        font-size: 5px;
+        color:#828282;
+
+
+}
+
+.comment_singer
+{
+        font-size: 5px;
+        color:#828282;
+
+}
+
+

@@ -1,0 +1,74 @@
+<?php
+$this->pageTitle=Yii::app()->name . ' - Login';
+$this->breadcrumbs=array(
+	'Login',
+);
+?>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="language" content="en" />
+
+
+
+
+
+        <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+
+
+
+                <link href="/3rd/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<link href="/css/gaga.css" rel="stylesheet">
+
+                <script src="/3rd/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+
+
+
+ <div class="col-xs-5 col-sm-5 ">
+</div>
+<div class="col-xs-6 col-sm-6">
+<h1>Login</h1>
+
+<div class="form">
+
+
+
+<?php $form=$this->beginWidget('CActiveForm', array(
+        'id'=>'login-form',
+        'enableAjaxValidation'=>true,
+)); ?>
+
+        <div class="row">
+                <?php echo $form->labelEx($model,'email'); ?>
+                <?php echo $form->textField($model,'email'); ?>
+                <?php echo $form->error($model,'email'); ?>
+        </div>
+
+        <div class="row">
+                <?php echo $form->labelEx($model,'password'); ?>
+                <?php echo $form->passwordField($model,'password'); ?>
+                <?php echo $form->error($model,'password'); ?>
+        </div>
+
+        <div class="row rememberMe">
+                <?php echo $form->checkBox($model,'rememberMe'); ?>
+                <?php echo $form->label($model,'rememberMe'); ?>
+                <?php echo $form->error($model,'rememberMe'); ?>
+        </div>
+
+        <div class="row submit">
+                <?php echo CHtml::submitButton('Login'); ?>
+        </div>
+		
+
+
+<?php $this->endWidget(); ?>
+</div><!-- form -->
+
+		<button onclick="window.location.href=('/Admin/adminuser/register')">Register</button>
+
+</div>
