@@ -45,10 +45,18 @@ class ApiController extends Controller
 	public function actionGetImage()
 	{
 
-        #     $page = $_GET['song'];
+             $tag = $_GET['tag'];
          #    $count = $_GET['count'];
-	     $images = Images::model()->findAll();
-	     $data   = array_map(create_function('$m','return $m->getAttributes(array(\'id\', \'category\', \'imageUrl\'));'),$images);
-	     echo json_encode($data);	
-	}
+	     $criteria = new CDbCriteria;
+             $criteria->condition = "tag='$tag' ";
+
+
+	     $images = Images::model()->findAll($criteria);
+	     $data   = array_map(create_function('$m','return $m->getAttributes(array(\'id\', \'category\', \'imageUrl\', \'date\', \'slug\'));'),$images);
+	     #echo json_encode($data);	
+		$this->layout=false;
+		header('Content-type: application/json');
+		echo json_encode($data);
+		Yii::app()->end(); 
+}
 }
