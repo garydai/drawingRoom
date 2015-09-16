@@ -2,7 +2,7 @@
 
 class HomeController extends Controller
 {
-	public $layout='column1';
+	public $layout='column2';
 
 	public $g_guest;
 	
@@ -66,71 +66,8 @@ class HomeController extends Controller
         public function actionIndex()
         {
 
-		$date = date('Y-m-d');
-		$date1 = $date.' 23:59:59';
-		$this->g_guest = Yii::app()->admin->isGuest;
-		$this->g_username = Yii::app()->admin->name;
-		$criteria = new CDbCriteria;
-		$criteria->condition = 'source ="qq" and date >= "'.$date.'" and date <= "'.$date1.'"';
-		$criteria->order = 'date desc';
-		
-		$qq = Music::model()->findAll($criteria);
 
-                $criteria = new CDbCriteria;
-                $criteria->condition = 'source ="xiami" and date >= "'.$date.'" and date <= "'.$date1.'"';
-
-                $criteria->order = 'date desc';
-
-                $xiami = Music::model()->findAll($criteria);
-		$other_comment = array();
-		foreach($xiami as $t)
-		{
-			$criteria = new CDbCriteria;
-			$criteria->condition = "album_id = $t->id";
-			$criteria->limit = 1;
-			$result = Other_comment::model()->findAll($criteria);
-			if($result)
-			{
-				$other_comment[$t->id]=$result[0]->comment;
-			}
-		
-		}
-	//	$other_comment = Other_comment::model()->findAll();
-		
-			
-			
-
-                $criteria = new CDbCriteria;
-                $criteria->condition = 'source ="163" and date >= "'.$date.'" and date <= "'.$date1.'"';
-
-
-                $criteria->order = 'date desc';
-
-                $net = Music::model()->findAll($criteria);
-                foreach($net as $t)
-                {
-                        $criteria = new CDbCriteria;
-                        $criteria->condition = "album_id = $t->id";
-                        $criteria->limit = 1;
-                        $result = Other_comment::model()->findAll($criteria);
-                        if($result)
-                        {
-                               $other_comment[$t->id]=$result[0]->comment;
-                        }
-                }
-		
-		
-
-			
-			
-                $criteria = new CDbCriteria;
-		$criteria->limit = 100;
-		$criteria->condition = "judge=1";
-		$criteria->order = 'date desc';
-		$r = Recommend::model()->findAll($criteria);	
-
-                $this->render('index', array('qq'=>$qq, 'xiami'=>$xiami, 'net'=>$net, 'recommend'=>$r, 'other_comment'=>$other_comment));
-	
+		$this->render("index");	
         }
 
 
