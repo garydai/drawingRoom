@@ -227,6 +227,7 @@ class upimg{
         if ($result)
 		{
             $this->thumbPath = $thumbPath;
+	    $this->imgPath = $this->uploadFolder.'/'.$newFileName; 
             $this->path=$this->uploadFolder . '/' . $filename;
             return $thumbPath;
         }

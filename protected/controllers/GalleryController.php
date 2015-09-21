@@ -137,12 +137,18 @@ class GalleryController extends Controller
                 {
 
 
-                        $image = new Images;
-                        $image->tag = $_POST['tag'];
-			$image->date = $_POST['date'];
-			$image->slug = $_POST['slug'];
-                        if(isset($_POST['source']))
+			if(isset($_POST['source']))
                         {
+				$images = explode(',', $_POST['source']);
+				$thumbs = explode('.', $_POST['thumb']);
+                        	$id = '';
+                        	for($i = 0; $i < count($images); $i++)
+                        	{
+
+                       			$image = new Images;
+                        		$image->tag = $_POST['tag'];
+					$image->date = $_POST['date'];
+					$image->slug = $_POST['slug'];
 
                                 /*
                                 $t = explode(',', $_POST['source']);
@@ -160,28 +166,14 @@ class GalleryController extends Controller
                                 }
 
                                 */
-                                $image->imageUrl = $_POST['source'];
-
+					$imageUrl = str_replace(array("\r\n", "\r", "\n", ''), "", $images[$i]);
+                               	 	$image->imageUrl = $imageUrl;
+               		       		$cmd = system("python /home/admin/uploadImg.py  $imageUrl",$ret);
+					$thumbUrl = str_replace(array("\r\n", "\r", "\n", ''), "", $thumbs[$i]);
+                                	$image->thumb = $thumbUrl;	
+					$image->save();
+				}
                         }
-                        if(isset($_POST['thumb']))
-                        {
-                                /*
-                                $t = explode(',', $_POST['thumb']);
-                                $id = '';
-                                foreach($t as $a)
-                                {
-                                        if($a != '')
-                                        {
-                                                $thumb = new Thumb;
-                                                $thumb->thumb = $a;
-                                                $thumb->save();
-                                                $id .= $thumb->id.',';  
-                                        }
-                                }
-                                */
-                                $image->thumb = $_POST['thumb'];
-                        }
-                        $image->save();
                         echo 1;
                 }
 

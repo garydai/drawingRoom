@@ -119,6 +119,7 @@ var save = function() {
                 url: "/gallery/addPic",
                 success: function() {
                       alert('success');
+			history.back();
                 }
             });
 

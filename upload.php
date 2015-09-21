@@ -9,37 +9,38 @@
 //	if (isset($_POST["PHPSESSID"])) {
 //		session_id($_POST["PHPSESSID"]);
 //	}
+
 	session_start();
 
 	//unset($_SESSION['upload_tem']);
 	ini_set("html_errors", "0");
-	if (!isset($_FILES["Filedata"]) || !is_uploaded_file($_FILES["Filedata"]["tmp_name"]) || $_FILES["Filedata"]["error"] != 0) {
+	if (!isset($_FILES["file"]) || !is_uploaded_file($_FILES["file"]["tmp_name"]) || $_FILES["file"]["error"] != 0) {
 		echo "错误:无效的上传!";
 		exit(0);
 	}
 
 	// Get the image and create a thumbnail
-	 $file_types=explode(".",$_FILES["Filedata"]["name"]);
+	 $file_types=explode(".",$_FILES["file"]["name"]);
      $file_type=$file_types[count($file_types)-1];
 	if(strtolower($file_type)=='gif' )
 	{
-		$img = imagecreatefromgif($_FILES["Filedata"]["tmp_name"]);
+		$img = imagecreatefromgif($_FILES["file"]["tmp_name"]);
 	}
 	else if(strtolower($file_type)=='png')
 	{
-		$img = imagecreatefrompng($_FILES["Filedata"]["tmp_name"]);
+		$img = imagecreatefrompng($_FILES["file"]["tmp_name"]);
 	}
 	else if(strtolower($file_type)=='bmp')
 	{
-		$img = imagecreatefromwbmp($_FILES["Filedata"]["tmp_name"]);
+		$img = imagecreatefromwbmp($_FILES["file"]["tmp_name"]);
 	}
 	else
 	{
-		$img = imagecreatefromjpeg($_FILES["Filedata"]["tmp_name"]);
+		$img = imagecreatefromjpeg($_FILES["file"]["tmp_name"]);
 	}
 
 	if (!$img) {
-		echo "错误:无法创建图像 ". $_FILES["Filedata"]["tmp_name"];
+		echo "错误:无法创建图像 ". $_FILES["file"]["tmp_name"];
 		exit(0);
 	}
 
@@ -92,7 +93,7 @@
 	$imagevariable = ob_get_contents();
 	ob_end_clean();
 
-	$file_id = md5($_FILES["Filedata"]["tmp_name"] + rand()*100000);
+	$file_id = md5($_FILES["file"]["tmp_name"] + rand()*100000);
 
 
 
@@ -101,7 +102,7 @@
 	//echo "FILEID:" . $file_id;	// Return the file id to the script
 	
 	include("upimg.class.php");
-	if(!empty($_FILES["Filedata"]))
+	if(!empty($_FILES["file"]))
 	{
 		$folder="upload/images/".date("Y-m-d");
 		$up = new upimg("$folder","upload/thumb/".date("Y-m-d")); //可以写成：$up = new upimg();
@@ -123,14 +124,16 @@
 		
 		$up = new upimg($op);*/
 
-		$result= $up->upload('Filedata'); // HTML中<input />的name属性值
+		$result= $up->upload('file'); // HTML中<input />的name属性值
 		//$water="logo.png";
 		//$waterimage= new waterimage($up->thumbPath,$water,3);//添加水印
 	//	$waterimage->waterimg();
 		$_SESSION["upload_tem"]=$up->thumbPath;
 		$_SESSION["upload_tem"]=trim($_SESSION["upload_tem"],",");
 		echo '/'.$up->thumbPath;
-		
+#    		$filePath = '/'.$up->imgPath;
+#		$cmd = system("python /home/admin/uploadImg.py  $filePath",$ret);
+	//	echo $filePath;	
 	//	var_dump($_SESSION);
 	}
 
